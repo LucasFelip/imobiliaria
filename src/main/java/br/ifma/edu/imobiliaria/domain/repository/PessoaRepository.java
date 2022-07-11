@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public class PessoaRepository extends JpaRepository<Pessoa, Integer> {
-	List<Pessoa> findByNomeContaining(String nome );
+	List<Pessoa> findByNomeContaining(String nome);
 
     Optional<Pessoa> findByEmail(String email);
 }
