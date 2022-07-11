@@ -1,4 +1,4 @@
-package br.ifma.edu.imobiliaria.model;
+package br.ifma.edu.imobiliaria.domain.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
