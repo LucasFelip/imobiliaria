@@ -11,6 +11,10 @@
     Lucas Felipe dos Reis Ferreira
     Tadeu Costa Viegas
 
+## Recursos
+* Java 17
+
+
 ### Para referência adicional, considere as seguintes seções:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
