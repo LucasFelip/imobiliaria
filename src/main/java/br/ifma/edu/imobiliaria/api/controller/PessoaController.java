@@ -24,35 +24,35 @@ public class PessoaController {
     }
 
     @GetMapping
-    public List<Pessoa> lista(String nome ) {
-        if (nome == null )
+    public Iterable<Pessoa> lista(String nome) {
+        if (nome == null)
             return service.todos();
-        else 
-            return service.buscaPor(nome );
+        else
+            return service.buscaPor(nome);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pessoa> buscaPor(@PathVariable Integer id) {
-       return service.buscaPor(id)
-               .map(ResponseEntity::ok)   //.map(cliente -> ResponseEntity.ok(cliente))
-               .orElse(ResponseEntity.notFound().build());
+        return service.buscaPor(id)
+                .map(ResponseEntity::ok) // .map(cliente -> ResponseEntity.ok(cliente))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<Pessoa> cadastro(@Valid @RequestBody Pessoa pessoa,
-                                            UriComponentsBuilder builder) {
+            UriComponentsBuilder builder) {
         final Pessoa pessoaSalvo = service.salva(pessoa);
         final URI uri = builder
-                     .path("/pessoas/{id}")
-                     .buildAndExpand(pessoaSalvo.getId()).toUri();
+                .path("/pessoas/{id}")
+                .buildAndExpand(pessoaSalvo.getId()).toUri();
 
         return ResponseEntity.created(uri).body(pessoaSalvo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Pessoa> atualiza(@PathVariable Integer id,
-                                            @Valid @RequestBody Pessoa pessoa) {
-        if (service.naoExisteClienteCom(id ) ) {
+            @Valid @RequestBody Pessoa pessoa) {
+        if (service.naoExisteClienteCom(id)) {
             return ResponseEntity.notFound().build();
 
         } else {
@@ -64,7 +64,7 @@ public class PessoaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> remover(@PathVariable Integer id) {
-        Optional<Pessoa> optional = service.buscaPor(id );
+        Optional<Pessoa> optional = service.buscaPor(id);
 
         if (optional.isPresent()) {
             service.removePelo(id);
