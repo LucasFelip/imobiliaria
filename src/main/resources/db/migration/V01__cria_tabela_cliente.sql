@@ -5,4 +5,4 @@ create table cliente (
     email varchar(255) not null,
     telefone varchar(20) not null,
     primary key (id)
-)
+);

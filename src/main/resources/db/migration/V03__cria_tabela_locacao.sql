@@ -1,4 +1,4 @@
-create table locacao {
+create table locacao (
     id integer not null auto_increment,
     imovel_id integer not null,
     cliente_id integer not null,
@@ -10,11 +10,4 @@ create table locacao {
     valorAluguel float not null,
     observacao varchar(255),
     primary key (id)
-};
-
-
-after table locacao add contraint fk_locacao_cliente
-    foreign key (cliente_id) references cliente (id);
-
-after table locacao add contraint fk_locacao_imovel
-    foreign key (imovel_id) references imovel (id);
+);

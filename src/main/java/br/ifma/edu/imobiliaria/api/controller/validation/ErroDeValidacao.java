@@ -1,10 +1,10 @@
-package br.ifma.edu.imobiliaria.api.exceptionhandler;
+package br.ifma.edu.imobiliaria.api.controller.validation;
 
-public class Erro {
+public class ErroDeValidacao {
     private String campo;
     private String mensagem;
 
-    public Erro(String campo, String erro) {
+    public ErroDeValidacao(String campo, String erro) {
         this.campo = campo;
         this.mensagem = erro;
     }
