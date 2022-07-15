@@ -1,0 +1,3 @@
+insert locacao (imovel_id, cliente_id, ativo, dataInicio, dataFim, diaVencimento, percentuaMulta, observacao) values(1,1,'true','15/07/2022','31/12/2022',15,100.0,'pagamento via pix');
+insert locacao (imovel_id, cliente_id, ativo, dataInicio, dataFim, diaVencimento, percentuaMulta, observacao) values(2,2,'true','3/01/2020','31/12/2025',10,100.0,'pagamento via pix');
+insert locacao (imovel_id, cliente_id, ativo, dataInicio, dataFim, diaVencimento, percentuaMulta, observacao) values(3,3,'false','10/05/2019','31/12/2020',22,100.0,'pagamento em dinheiro');
