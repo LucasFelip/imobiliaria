@@ -17,22 +17,22 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Pessoa {
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@EqualsAndHashCode.Include
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @NotBlank
-    @Size(max = 60)
-    private String nome;
+	@NotBlank
+	@Size(max = 60)
+	private String nome;
 
-    @NotBlank
-    @Email
-    @Size(max = 100)
-    private String email;
+	@NotBlank
+	@Email
+	@Size(max = 100)
+	private String email;
 
-    @Size(min = 8, max = 20)
-    private String telefone;
+	@Size(min = 8, max = 20)
+	private String telefone;
 
-    private String endereco;
+	private String endereco;
 }

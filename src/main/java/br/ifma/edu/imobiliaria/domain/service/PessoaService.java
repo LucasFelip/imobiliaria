@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class PessoaService {
-	private final PessoaRepository repository;
+	private final PessoaRepository repository = null;
 
 	public List<Pessoa> todos() {
 		return repository.findAll();
@@ -34,8 +35,7 @@ public class PessoaService {
 		boolean emailEmUso = repository
 				.findByEmail(pessoa.getEmail())
 				.stream()
-				.anyMatch(clienteExistente -> !clienteExistente.equals(pessoa));
-
+				.anyMatch(pessoaExistente -> !Objects.equals(pessoaExistente, pessoa));
 		if (emailEmUso)
 			throw new NegocioException("Já existe uma pessoa cadastrado com este e-mail.");
 		return repository.save(pessoa);
@@ -49,4 +49,13 @@ public class PessoaService {
 	public boolean naoExisteClienteCom(Integer id) {
 		return !repository.existsById(id);
 	}
+	
+	public Page<Pessoa> buscaPaginada(Pageable page) {
+        return repository.findAll(page );
+
+    }
+
+    public Page<Pessoa> buscaPor(String nome, Pageable paginacao) {
+        return repository.findByNomeContaining(nome, paginacao );
+    }
 }
