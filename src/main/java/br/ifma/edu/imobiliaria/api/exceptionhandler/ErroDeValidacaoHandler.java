@@ -16,16 +16,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestControllerAdvice
-public class ApiExceptionHandler {
+public class ErroDeValidacaoHandler {
 
     @Autowired
     private MessageSource messageSource;
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrosDeValidacao handle(MethodArgumentNotValidException exception) {
+    public ErroDeValidacao handle(MethodArgumentNotValidException exception) {
 
-        ErrosDeValidacao erros = new ErrosDeValidacao(LocalDateTime.now(),
+        ErroDeValidacao erros = new ErroDeValidacao(LocalDateTime.now(),
                 "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente");
 
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
@@ -39,9 +39,9 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NegocioException.class)
-    public ErrosDeValidacao handleNegocio(NegocioException ex) {
+    public ErroDeValidacao handleNegocio(NegocioException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        ErrosDeValidacao erros = new ErrosDeValidacao(LocalDateTime.now(), ex.getMessage());
+        ErroDeValidacao erros = new ErroDeValidacao(LocalDateTime.now(), ex.getMessage());
 
         return erros;
     }
