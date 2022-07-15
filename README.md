@@ -13,7 +13,8 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
     A API consiste em uma realização de alugéis, onde os imóveis podem ser cadastrados, pesquisados pelos clientes, o sistema realiza o aluguel a um inquilino ou a venda do imóvel.
 
 ## Documentação HTTP   
-
+![HTTP 1](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-readme-aluguel.jpg)
+![HTTP 2](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-readme-imoveis.jpg)
 
 # Tecnologias
 
