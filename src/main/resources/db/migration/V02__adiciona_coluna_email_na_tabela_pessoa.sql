@@ -1,2 +1,0 @@
-ALTER TABLE pessoa
-    ADD COLUMN email VARCHAR(100) NOT NULL AFTER telefone;

@@ -1,6 +1,5 @@
 package br.ifma.edu.imobiliaria.api.exceptionhandler;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
@@ -19,8 +18,8 @@ public class ErrosDeValidacao {
 		this.titulo = titulo;
 	}
 
-	public void adiciona(Erro erro ) {
-		erros.add(erro );
+	public void adiciona(Erro erro) {
+		erros.add(erro);
 	}
 
 	public LocalDateTime getDataHora() {
