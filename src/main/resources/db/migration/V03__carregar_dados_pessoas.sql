@@ -1,2 +1,0 @@
-insert into pessoa(nome, endereco, telefone, email) values ('Lucas Felipe', 'Rua 16 Casa 56 Cohatrac 2', '988525278', 'lucasfelipereis@hotmail.com');
-insert into pessoa(nome, endereco, telefone, email) values ('Felipão', 'Rua // Casa 0 Cohatrac 3', '988478988', 'lucas@hotmail.com');
