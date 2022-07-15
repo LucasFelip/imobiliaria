@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
     Iterable<Pessoa> findByNomeContaining(String nome);
+
     Page<Pessoa> findByNomeContaining(String nome, Pageable paginacao);
+
     Optional<Pessoa> findByEmail(String email);
 }

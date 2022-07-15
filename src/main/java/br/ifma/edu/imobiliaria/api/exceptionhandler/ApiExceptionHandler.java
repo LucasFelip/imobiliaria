@@ -21,9 +21,9 @@ public class ApiExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST )
-    @ExceptionHandler(MethodArgumentNotValidException.class )
-    public ErrosDeValidacao handle(MethodArgumentNotValidException exception ) {
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrosDeValidacao handle(MethodArgumentNotValidException exception) {
 
         ErrosDeValidacao erros = new ErrosDeValidacao(LocalDateTime.now(),
                 "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente");
@@ -32,14 +32,14 @@ public class ApiExceptionHandler {
 
         fieldErrors.forEach(field -> {
             String mensagem = messageSource.getMessage(field, LocaleContextHolder.getLocale());
-            erros.adiciona(new Erro(field.getField(), mensagem) );
+            erros.adiciona(new Erro(field.getField(), mensagem));
         });
         return erros;
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NegocioException.class)
-    public ErrosDeValidacao handleNegocio(NegocioException ex ) {
+    public ErrosDeValidacao handleNegocio(NegocioException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ErrosDeValidacao erros = new ErrosDeValidacao(LocalDateTime.now(), ex.getMessage());
 
