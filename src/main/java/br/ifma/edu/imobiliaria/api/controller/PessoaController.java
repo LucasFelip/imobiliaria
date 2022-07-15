@@ -2,8 +2,12 @@ package br.ifma.edu.imobiliaria.api.controller;
 
 import br.ifma.edu.imobiliaria.domain.model.Pessoa;
 import br.ifma.edu.imobiliaria.domain.service.PessoaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,15 +17,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
     private final PessoaService service;
-
-    @Autowired
-    public PessoaController(PessoaService pessoaService) {
-        this.service = pessoaService;
-    }
 
     @GetMapping
     public Iterable<Pessoa> lista(String nome) {
@@ -29,6 +29,25 @@ public class PessoaController {
             return service.todos();
         else
             return service.buscaPor(nome);
+    }
+
+    @GetMapping("paginacao/{numPagina}/{qtdPagina}")
+    public Iterable<Pessoa> buscaPaginada(@PathVariable int numPagina,
+            @PathVariable int qtdPagina) {
+        if (qtdPagina > 10)
+            qtdPagina = 10;
+        PageRequest page = PageRequest.of(numPagina, qtdPagina);
+        return service.buscaPaginada(page);
+
+    }
+
+    @GetMapping("/paginacao")
+    public Iterable<Pessoa> lista(@RequestParam(required = false) String nome,
+            @PageableDefault(sort = "nome", direction = Sort.Direction.ASC, page = 0, size = 5) Pageable paginacao) {
+        if (nome == null)
+            return service.buscaPaginada(paginacao);
+        else
+            return service.buscaPor(nome, paginacao);
     }
 
     @GetMapping("/{id}")
