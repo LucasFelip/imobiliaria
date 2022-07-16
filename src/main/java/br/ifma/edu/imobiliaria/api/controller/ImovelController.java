@@ -27,62 +27,53 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ifma.edu.imobiliaria.domain.model.Imovel;
-import br.ifma.edu.imobiliaria.domain.repository.filter.ImovelFilter;
 import br.ifma.edu.imobiliaria.domain.service.ImovelService;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/imoveis")
 public class ImovelController {
 
-    private final ImovelService imovelService;
-
-    @Autowired
-    public ImovelController(ImovelService imovelService) {
-        this.imovelService = imovelService;
-    }
-
-    @GetMapping("/pesquisa")
-    public Page<Imovel> buscaFiltrada(ImovelFilter filtro, Pageable page) {
-        return imovelService.busca(filtro, page);
-
-    }
+    private final ImovelService service;
 
     @GetMapping
     @CacheEvict(value = "listaDeAlugueis", allEntries = true)
     public Page<Imovel> listar(
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 2) Pageable pageable) {
-        return this.imovelService.buscaCom(pageable);
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 10, size = 50) Pageable pageable) {
+        return this.service.buscaPaginada(pageable);
     }
 
     @PostMapping
     public Imovel cadastrar(@RequestBody @Valid Imovel imovel) {
-        return this.imovelService.salvar(imovel);
+        return this.service.salvar(imovel);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        Optional<Imovel> imovel = this.imovelService.buscaPor(id);
+    public ResponseEntity<?> deletar(@PathVariable Integer id) {
+        Optional<Imovel> imovel = this.service.buscaPor(id);
         if (imovel.isPresent()) {
-            this.imovelService.deletePor(id);
+            this.service.removePelo(id);
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Imovel> atualiza(@PathVariable Long id, Imovel imovel) {
-        Optional<Imovel> optional = this.imovelService.buscaPor(id);
+    public ResponseEntity<Imovel> atualiza(@PathVariable Integer id, Imovel imovel) {
+        Optional<Imovel> optional = this.service.buscaPor(id);
         if (optional.isPresent()) {
             imovel.setId(id);
-            Imovel imovelAtualizado = this.imovelService.salvar(imovel);
+            Imovel imovelAtualizado = this.service.salvar(imovel);
             ResponseEntity.ok(imovelAtualizado);
         }
         return ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Imovel> atualizacaoParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos) {
-        Optional<Imovel> optional = this.imovelService.buscaPor(id);
+    public ResponseEntity<Imovel> atualizacaoParcial(@PathVariable Integer id,
+            @RequestBody Map<String, Object> campos) {
+        Optional<Imovel> optional = this.service.buscaPor(id);
         if (optional.isPresent()) {
             Imovel imovelAtual = optional.get();
             this.merge(campos, imovelAtual);

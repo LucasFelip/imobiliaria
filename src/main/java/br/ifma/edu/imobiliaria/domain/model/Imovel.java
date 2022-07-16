@@ -16,7 +16,7 @@ public class Imovel {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @NotNull
     @NotEmpty

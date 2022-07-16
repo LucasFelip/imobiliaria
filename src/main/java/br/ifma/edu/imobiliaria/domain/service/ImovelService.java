@@ -2,7 +2,6 @@ package br.ifma.edu.imobiliaria.domain.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,38 +9,45 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.repository.ImovelRepository;
-import br.ifma.edu.imobiliaria.domain.repository.filter.ImovelFilter;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Service
 public class ImovelService {
 
-    private ImovelRepository imovelRepository;
+    private ImovelRepository repository;
 
-    @Autowired
-    public ImovelService(ImovelRepository imovelRepository) {
-        this.imovelRepository = imovelRepository;
+    public Iterable<Imovel> todos() {
+        return repository.findAll();
+    }
+
+    public Optional<Imovel> buscaPor(Integer id) {
+        return repository.findById(id);
+    }
+
+    public Iterable<Imovel> buscarPor(Double valorDeAluquelSugerido) {
+        return repository.findByValorDeAluquelSugerido(valorDeAluquelSugerido);
+    }
+
+    public Page<Imovel> buscaPor(Double valorDeAluquelSugerido, Pageable paginacao) {
+        return repository.findByValorDeAluquelSugerido(valorDeAluquelSugerido, paginacao);
+    }
+
+    public Page<Imovel> buscaPaginada(Pageable page) {
+        return repository.findAll(page);
     }
 
     @Transactional
     public Imovel salvar(Imovel imovel) {
-        return this.imovelRepository.save(imovel);
+        return this.repository.save(imovel);
     }
 
     @Transactional
-    public void deletePor(Long id) {
-        this.imovelRepository.deleteById(id);
+    public void removePelo(Integer id) {
+        repository.deleteById(id);
     }
 
-    public Optional<Imovel> buscaPor(Long id) {
-        return this.imovelRepository.findById(id);
-    }
-
-    public Page<Imovel> buscaCom(Pageable pageable) {
-        return this.imovelRepository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Imovel> busca(ImovelFilter filtro, Pageable page) {
-        return imovelRepository.filtrar(filtro, page);
+    public boolean naoExisteImovelCom(Integer id) {
+        return !repository.existsById(id);
     }
 }

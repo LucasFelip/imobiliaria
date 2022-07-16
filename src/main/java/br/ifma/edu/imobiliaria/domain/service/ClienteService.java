@@ -1,59 +1,64 @@
 package br.ifma.edu.imobiliaria.domain.service;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.ifma.edu.imobiliaria.domain.exception.NegocioException;
 import br.ifma.edu.imobiliaria.domain.model.Cliente;
-import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.repository.ClienteRepository;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Service
 public class ClienteService {
 
-    private final ClienteRepository clienteRepository;
+    private final ClienteRepository repository;
 
-    @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
+    public Iterable<Cliente> todos() {
+        return repository.findAll();
+    }
+
+    public Optional<Cliente> buscaPor(Integer id) {
+        return repository.findById(id);
+    }
+
+    public Iterable<Cliente> buscaPor(String nome) {
+        return repository.findByNomeContaining(nome);
+    }
+
+    public Page<Cliente> buscaPor(String nome, Pageable paginacao) {
+        return repository.findByNomeContaining(nome, paginacao);
+    }
+
+    public Page<Cliente> buscaPaginada(Pageable page) {
+        return repository.findAll(page);
     }
 
     @Transactional
-    public Cliente salvar(Cliente cliente) {
-        return this.clienteRepository.save(cliente);
-    }
+    public Cliente salva(Cliente cliente) {
+        boolean emailEmUso = ((Collection<Cliente>) repository
+                .findByEmail(cliente.getEmail()))
+                .stream()
+                .anyMatch(clienteExistente -> !Objects.equals(clienteExistente, cliente));
 
-    public List<Cliente> todos() {
-        return this.clienteRepository.findAll();
+        if (emailEmUso) {
+            throw new NegocioException("Já existe um cliente cadastrado com este e-mail.");
+        }
+        return repository.save(cliente);
     }
 
     @Transactional
-    public void deletePor(Long id) {
-        this.clienteRepository.deleteById(id);
+    public void removePelo(Integer id) {
+        repository.deleteById(id);
     }
 
-    public Optional<Cliente> buscaPor(Long id) {
-        return this.clienteRepository.findById(id);
-    }
-
-    public List<Cliente> buscaPor(String nome) {
-        return this.clienteRepository.findByNomeContaining(nome);
-    }
-
-    public Page<Cliente> buscaPor(String nome, Pageable pageable) {
-        return this.clienteRepository.findByNomeContaining(nome, pageable);
-    }
-
-    public Page<Cliente> buscaCom(Pageable pageable) {
-        return this.clienteRepository.findAll(pageable);
-    }
-
-    public void alugarImovel(Imovel imovel) {
-
+    public boolean naoExisteClienteCom(Integer id) {
+        return !repository.existsById(id);
     }
 }

@@ -7,11 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.base.Optional;
+
 import br.ifma.edu.imobiliaria.domain.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     List<Cliente> findByNomeContaining(String nome);
 
     Page<Cliente> findByNomeContaining(String nome, Pageable paginacao);
+
+    Optional<Cliente> findByEmail(String email);
 }
