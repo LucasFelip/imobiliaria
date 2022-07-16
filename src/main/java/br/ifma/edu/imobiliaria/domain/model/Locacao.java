@@ -19,7 +19,7 @@ public class Locacao {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Imovel imovel;

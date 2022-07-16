@@ -56,7 +56,6 @@ public class ClienteController {
             @PageableDefault(sort = "nome", direction = Sort.Direction.ASC, page = 0, size = 5) Pageable paginacao) {
         if (nome == null) {
             return service.buscaPaginada(paginacao);
-
         } else {
             return service.buscaPor(nome, paginacao);
         }

@@ -10,16 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.ifma.edu.imobiliaria.domain.model.Locacao;
 import br.ifma.edu.imobiliaria.domain.repository.LocacaoRepository;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Service
 public class LocacaoService {
 
     private LocacaoRepository locacaoRepository;
-
-    @Autowired
-    public LocacaoService(LocacaoRepository locacaoRepository) {
-        this.locacaoRepository = locacaoRepository;
-    }
 
     @Transactional
     public Locacao salvar(Locacao aluguel) {
@@ -27,15 +24,15 @@ public class LocacaoService {
     }
 
     @Transactional
-    public void deletePor(Long id) {
+    public void deletePor(Integer id) {
         this.locacaoRepository.deleteById(id);
     }
 
-    public Optional<Locacao> buscaPor(Long id) {
+    public Optional<Locacao> buscaPor(Integer id) {
         return this.locacaoRepository.findById(id);
     }
 
-    public Page<Locacao> buscaCom(Pageable pageable) {
+    public Page<Locacao> buscaPaginada(Pageable pageable) {
         return this.locacaoRepository.findAll(pageable);
     }
 }

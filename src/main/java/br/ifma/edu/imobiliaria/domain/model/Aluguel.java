@@ -25,7 +25,7 @@ public class Aluguel {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVencimento;
