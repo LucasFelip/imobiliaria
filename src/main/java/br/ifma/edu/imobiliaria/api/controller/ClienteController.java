@@ -1,35 +1,26 @@
 package br.ifma.edu.imobiliaria.api.controller;
 
-import java.net.URI;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.ifma.edu.imobiliaria.domain.model.Cliente;
 import br.ifma.edu.imobiliaria.domain.service.ClienteService;
-import lombok.AllArgsConstructor;
 
-import org.springframework.data.domain.Sort;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
+
     private final ClienteService service;
 
     @GetMapping
@@ -56,6 +47,7 @@ public class ClienteController {
             @PageableDefault(sort = "nome", direction = Sort.Direction.ASC, page = 0, size = 5) Pageable paginacao) {
         if (nome == null) {
             return service.buscaPaginada(paginacao);
+
         } else {
             return service.buscaPor(nome, paginacao);
         }
@@ -83,7 +75,7 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualiza(@PathVariable Integer id,
             @Valid @RequestBody Cliente cliente) {
-        if (service.naoExisteClienteCom(id)) {
+        if (service.naoExisteCom(id)) {
             return ResponseEntity.notFound().build();
 
         } else {

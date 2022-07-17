@@ -1,21 +1,21 @@
 package br.ifma.edu.imobiliaria.domain.service;
 
-import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
-
+import java.util.Objects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.ifma.edu.imobiliaria.domain.exception.NegocioException;
 import br.ifma.edu.imobiliaria.domain.model.Cliente;
 import br.ifma.edu.imobiliaria.domain.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class ClienteService {
 
     private final ClienteRepository repository;
@@ -32,17 +32,9 @@ public class ClienteService {
         return repository.findByNomeContaining(nome);
     }
 
-    public Page<Cliente> buscaPor(String nome, Pageable paginacao) {
-        return repository.findByNomeContaining(nome, paginacao);
-    }
-
-    public Page<Cliente> buscaPaginada(Pageable page) {
-        return repository.findAll(page);
-    }
-
     @Transactional
     public Cliente salva(Cliente cliente) {
-        boolean emailEmUso = ((Collection<Cliente>) repository
+        boolean emailEmUso = (repository
                 .findByEmail(cliente.getEmail()))
                 .stream()
                 .anyMatch(clienteExistente -> !Objects.equals(clienteExistente, cliente));
@@ -58,7 +50,16 @@ public class ClienteService {
         repository.deleteById(id);
     }
 
-    public boolean naoExisteClienteCom(Integer id) {
+    public boolean naoExisteCom(Integer id) {
         return !repository.existsById(id);
+    }
+
+    public Page<Cliente> buscaPaginada(Pageable page) {
+        return repository.findAll(page);
+
+    }
+
+    public Page<Cliente> buscaPor(String nome, Pageable paginacao) {
+        return repository.findByNomeContaining(nome, paginacao);
     }
 }
