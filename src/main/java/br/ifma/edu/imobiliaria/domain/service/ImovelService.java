@@ -1,16 +1,18 @@
 package br.ifma.edu.imobiliaria.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.repository.ImovelRepository;
 import lombok.AllArgsConstructor;
 
-@Service
 @AllArgsConstructor
+@Service
 public class ImovelService {
     private final ImovelRepository repository;
 
@@ -18,16 +20,16 @@ public class ImovelService {
         return repository.findAll();
     }
 
-    public Optional<Imovel> buscaPor(Integer id) {
+    public Optional<Imovel> buscaPor(Long id) {
         return repository.findById(id);
     }
 
-    public Iterable<Imovel> buscaPor(String tipoImovel) {
-        return repository.findByTipoImovel(tipoImovel);
+    public List<Imovel> buscaPor(String nome) {
+        return repository.findByCidadeLikeIgnoreCase(nome);
     }
 
-    public Iterable<Imovel> buscaPor(Double valorDeAluguelSugerido) {
-        return repository.findByValorDeAluguelSugerido(valorDeAluguelSugerido);
+    public List<Imovel> buscaPorImobiliaria(Long id) {
+        return repository.findByImobiliariaId(id);
     }
 
     @Transactional
@@ -36,11 +38,11 @@ public class ImovelService {
     }
 
     @Transactional
-    public void removePelo(Integer id) {
+    public void removePelo(Long id) {
         repository.deleteById(id);
     }
 
-    public boolean naoExisteCom(Integer id) {
+    public boolean naoExisteCom(Long id) {
         return !repository.existsById(id);
     }
 }

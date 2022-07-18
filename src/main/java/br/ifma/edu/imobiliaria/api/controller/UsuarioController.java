@@ -1,9 +1,10 @@
 package br.ifma.edu.imobiliaria.api.controller;
 
-import br.ifma.edu.imobiliaria.domain.model.Imovel;
-import br.ifma.edu.imobiliaria.domain.service.ImovelService;
+import br.ifma.edu.imobiliaria.domain.model.Usuario;
+import br.ifma.edu.imobiliaria.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,54 +24,53 @@ import javax.validation.Valid;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/imovel")
-public class ImovelController {
-    private final ImovelService service;
+@RequestMapping(value = "/usuario")
+public class UsuarioController {
+    private final UsuarioService service;
 
     @GetMapping
-    public List<Imovel> listar() {
-        return (List<Imovel>) service.todos();
+    public List<Usuario> listar() {
+        return (List<Usuario>) service.todos();
     }
 
     @GetMapping("{id}")
-    public Optional<Imovel> listaUsuarioPorId(@PathVariable(value = "id") long id) {
+    public Optional<Usuario> listaUsuarioPorId(@PathVariable(value = "id") long id) {
         return service.buscaPor(id);
     }
 
-    @GetMapping(path = "/imobiliaria/{id}")
-    public List<Imovel> listaPorImobiliaria(@PathVariable("id") long id) {
-        return service.buscaPorImobiliaria(id);
-    }
-
-    @GetMapping(path = "/cidade/{cidade}")
-    public List<Imovel> listaPorCidade(@RequestParam(name = "cidade") String cidade) {
-        return service.buscaPor("%" + cidade + "%");
+    @GetMapping("paginacao/{numPagina}/{qtdPagina}")
+    public Iterable<Usuario> buscaPaginada(@PathVariable int numPagina,
+            @PathVariable int qtdPagina) {
+        if (qtdPagina > 10)
+            qtdPagina = 10;
+        PageRequest page = PageRequest.of(numPagina, qtdPagina);
+        return service.buscaPaginada(page);
     }
 
     @PostMapping
-    public ResponseEntity<Imovel> salvaUsuario(@RequestBody Imovel imovel, UriComponentsBuilder builder) {
-        final Imovel imovelSalvo = service.salva(imovel);
+    public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario, UriComponentsBuilder builder) {
+        final Usuario usuarioSalvo = service.salva(usuario);
         final URI uri = builder
                 .path("/usuario/{id}")
-                .buildAndExpand(imovelSalvo.getId()).toUri();
-        return ResponseEntity.created(uri).body(imovelSalvo);
+                .buildAndExpand(usuarioSalvo.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuarioSalvo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Imovel> atualiza(@PathVariable Long id,
-            @Valid @RequestBody Imovel imovel) {
+    public ResponseEntity<Usuario> atualiza(@PathVariable Long id,
+            @Valid @RequestBody Usuario usuario) {
         if (service.naoExisteCom(id)) {
             return ResponseEntity.notFound().build();
         } else {
-            imovel.setId(id);
-            Imovel imovelAtualizado = service.salva(imovel);
-            return ResponseEntity.ok(imovelAtualizado);
+            usuario.setId(id);
+            Usuario usuarioAtualizado = service.salva(usuario);
+            return ResponseEntity.ok(usuarioAtualizado);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> remover(@PathVariable Long id) {
-        Optional<Imovel> optional = service.buscaPor(id);
+        Optional<Usuario> optional = service.buscaPor(id);
 
         if (optional.isPresent()) {
             service.removePelo(id);
@@ -79,4 +78,5 @@ public class ImovelController {
         }
         return ResponseEntity.notFound().build();
     }
+
 }

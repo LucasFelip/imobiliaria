@@ -1,3 +1,0 @@
-insert imovel (tipoImovel, endereco, cep, dormitorio, banheiro, suites, metragem, valorAluguel, observacao) values ('ap','travessa da cracolandia','65055550', null, null,null,null,400.0, 'pequeno');
-insert imovel (tipoImovel, endereco, cep, dormitorio, banheiro, suites, metragem, valorAluguel, observacao) values ('casa','rua 16','65054220',2,2,1,14,200.0,'Proibido a presença de animais');
-insert imovel (tipoImovel, endereco, cep, dormitorio, banheiro, suites, metragem, valorAluguel, observacao) values ('ap','rua 17','65054220',3,2,2,26,500.0,'Restrições feitas pelo dono do local');
