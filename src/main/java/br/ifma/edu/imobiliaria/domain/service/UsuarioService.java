@@ -26,6 +26,10 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
+    public Usuario buscaPor(String email) {
+        return repository.findByEmail(email);
+    }
+
     @Transactional
     public Usuario salva(Usuario usuario) {
         Usuario emailEmUso = repository.findByEmail(usuario.getEmail().toString());

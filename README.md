@@ -8,9 +8,9 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
     Esse projeto tem como foco trabalhar em um fragmento de sistema presente de uma imobiliária
     focando em pontos principais e atendendo as necessidades solicitadas pela atividade.
 
-    API REST construida para o modulo de gestão de imóveis destinado ao projeto de imobiliaria de Linguagem de programação web Instituto Federal de Educação, Ciência e Tecnologia do Maranhão, IFMA,com boas práticas REST.
-
-    A API consiste em uma realização de alugéis, onde os imóveis podem ser cadastrados, pesquisados pelos clientes, o sistema realiza o aluguel a um inquilino ou a venda do imóvel.
+    API REST construida para o modulo de gestão de imóveis destinado ao projeto de imobiliaria de 
+    Linguagem de programação web Instituto Federal de Educação, Ciência e Tecnologia do Maranhão,
+    com boas práticas REST.
 
 ## Documentação HTTP   
 
@@ -54,4 +54,4 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
         - 20191SI0017
 
     Tadeu Costa Viegas
-        - 20191SI00XX
+        - 20191SI0022
