@@ -20,7 +20,7 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
 
 ### Clientes
 
-![HTTP 2](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-clientes.jpg)
+![HTTP 2](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-cliente.jpg)
 
 ### Imobiliaria
 
