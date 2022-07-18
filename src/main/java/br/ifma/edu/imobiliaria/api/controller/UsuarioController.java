@@ -38,6 +38,13 @@ public class UsuarioController {
         return service.buscaPor(id);
     }
 
+    /*
+     * @GetMapping("{email}")
+     * public Usuario buscarUserPorEmail(String email) {
+     * return service.buscaPor(email);
+     * }
+     */
+
     @GetMapping("paginacao/{numPagina}/{qtdPagina}")
     public Iterable<Usuario> buscaPaginada(@PathVariable int numPagina,
             @PathVariable int qtdPagina) {

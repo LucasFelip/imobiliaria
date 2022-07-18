@@ -34,7 +34,7 @@ public class ImovelController {
     }
 
     @GetMapping("{id}")
-    public Optional<Imovel> listaUsuarioPorId(@PathVariable(value = "id") long id) {
+    public Optional<Imovel> listaImovelPorId(@PathVariable(value = "id") long id) {
         return service.buscaPor(id);
     }
 
@@ -49,15 +49,15 @@ public class ImovelController {
     }
 
     @PostMapping
-    public ResponseEntity<Imovel> salvaUsuario(@RequestBody Imovel imovel, UriComponentsBuilder builder) {
+    public ResponseEntity<Imovel> salvaImovel(@RequestBody Imovel imovel, UriComponentsBuilder builder) {
         final Imovel imovelSalvo = service.salva(imovel);
         final URI uri = builder
-                .path("/usuario/{id}")
+                .path("/imovel/{id}")
                 .buildAndExpand(imovelSalvo.getId()).toUri();
         return ResponseEntity.created(uri).body(imovelSalvo);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Imovel> atualiza(@PathVariable Long id,
             @Valid @RequestBody Imovel imovel) {
         if (service.naoExisteCom(id)) {
@@ -69,7 +69,7 @@ public class ImovelController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Imovel> optional = service.buscaPor(id);
 
