@@ -1,16 +1,16 @@
-package br.ifma.edu.imobiliaria.api.exceptionhandler;
+package br.ifma.edu.imobiliaria.api.exceptionHandler;
 
-import br.ifma.edu.imobiliaria.domain.exception.NegocioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import br.ifma.edu.imobiliaria.domain.exception.NegocioException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,9 +40,7 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NegocioException.class)
     public ErrosDeValidacao handleNegocio(NegocioException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
         ErrosDeValidacao erros = new ErrosDeValidacao(LocalDateTime.now(), ex.getMessage());
-
         return erros;
     }
 }

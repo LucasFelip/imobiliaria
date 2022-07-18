@@ -1,4 +1,4 @@
-package br.ifma.edu.imobiliaria.api.exceptionhandler;
+package br.ifma.edu.imobiliaria.api.exceptionHandler;
 
 public class Erro {
     private String campo;
