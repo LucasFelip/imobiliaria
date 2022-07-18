@@ -1,5 +1,5 @@
 CREATE TABLE `imobiliaria` (
-  `id` bigint NOT NULL  AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `cnpj` varchar(18) NOT NULL,
   `descricao` varchar(256) NOT NULL,
   `email` varchar(45) NOT NULL,
