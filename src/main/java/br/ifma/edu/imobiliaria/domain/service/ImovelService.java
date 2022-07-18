@@ -3,9 +3,6 @@ package br.ifma.edu.imobiliaria.domain.service;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-
-import org.springdoc.core.converters.models.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import br.ifma.edu.imobiliaria.domain.model.Imovel;
