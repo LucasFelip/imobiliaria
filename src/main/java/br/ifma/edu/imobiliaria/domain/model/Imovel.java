@@ -30,13 +30,13 @@ public class Imovel {
     @NotEmpty
     private String Cep;
 
-    private int dormitorio;
+    private Integer dormitorio;
 
-    private int banheiro;
+    private Integer banheiro;
 
-    private int suites;
+    private Integer suites;
 
-    private int metragem;
+    private Integer metragem;
 
     @NotNull
     @NotEmpty

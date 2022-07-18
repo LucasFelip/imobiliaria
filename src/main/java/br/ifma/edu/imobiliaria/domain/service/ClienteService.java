@@ -56,7 +56,6 @@ public class ClienteService {
 
     public Page<Cliente> buscaPaginada(Pageable page) {
         return repository.findAll(page);
-
     }
 
     public Page<Cliente> buscaPor(String nome, Pageable paginacao) {

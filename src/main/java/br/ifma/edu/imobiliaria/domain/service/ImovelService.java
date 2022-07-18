@@ -2,41 +2,48 @@ package br.ifma.edu.imobiliaria.domain.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.springdoc.core.converters.models.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.repository.ImovelRepository;
-import br.ifma.edu.imobiliaria.domain.repository.Filter.ImovelFilter;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class ImovelService {
-    private ImovelRepository imovelRepository;
+    private final ImovelRepository repository;
 
-    @Transactional
-    public Imovel salvar(Imovel imovel) {
-        return this.imovelRepository.save(imovel);
-    }
-
-    @Transactional
-    public void deletePor(Integer id) {
-        this.imovelRepository.deleteById(id);
+    public Iterable<Imovel> todos() {
+        return repository.findAll();
     }
 
     public Optional<Imovel> buscaPor(Integer id) {
-        return this.imovelRepository.findById(id);
+        return repository.findById(id);
     }
 
-    public Page<Imovel> buscaCom(Pageable pageable) {
-        return this.imovelRepository.findAll(pageable);
+    public Iterable<Imovel> buscaPor(String tipoImovel) {
+        return repository.findByTipoImovel(tipoImovel);
     }
 
-    @Transactional(readOnly = true)
-    public Page<Imovel> busca(ImovelFilter filtro, Pageable page) {
-        return imovelRepository.filtrar(filtro, page);
+    public Iterable<Imovel> buscaPor(Double valorDeAluguelSugerido) {
+        return repository.findByValorDeAluguelSugerido(valorDeAluguelSugerido);
+    }
+
+    @Transactional
+    public Imovel salva(Imovel imovel) {
+        return repository.save(imovel);
+    }
+
+    @Transactional
+    public void removePelo(Integer id) {
+        repository.deleteById(id);
+    }
+
+    public boolean naoExisteCom(Integer id) {
+        return !repository.existsById(id);
     }
 }
