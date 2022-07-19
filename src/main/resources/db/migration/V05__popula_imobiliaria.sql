@@ -1,2 +1,4 @@
 INSERT INTO `imobiliaria` (`cnpj`,`descricao`,`email`,`nome`,`senha`) VALUES ('123456789','ImoBil Top','caio11@email.com','Imobil','caio12');
 INSERT INTO `imobiliaria` (`cnpj`,`descricao`,`email`,`nome`,`senha`) VALUES ('1234567891','ImoShow Top','caio111@email.com','ImoShow','caio12');
+INSERT INTO `Imobiliaria` (`cnpj`,`descricao`,`email`,`nome`,`senha`) VALUES ('123456788','aluguel de imóveis de todos os tipos','joao@email.com','Imobiliaria Sao Jose','joao123');
+INSERT INTO `Imobiliaria` (`cnpj`,`descricao`,`email`,`nome`,`senha`) VALUES ('987654321','terrenos, loteamento, incorporação de imóveis','helena@email.com','Imobiliaria Dois Irmaos','helena2022');
