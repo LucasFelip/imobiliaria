@@ -26,7 +26,7 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
-    public Usuario buscaPor(String email) {
+    public Usuario buscaPorEmail(String email) {
         return repository.findByEmail(email);
     }
 
