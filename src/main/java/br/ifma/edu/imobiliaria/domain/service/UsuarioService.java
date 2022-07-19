@@ -19,28 +19,35 @@ public class UsuarioService {
     private final UsuarioRepository repository;
 
     public Iterable<Usuario> todos() {
+        if (repository.findAll() == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado.");
         return repository.findAll();
     }
 
     public Optional<Usuario> buscaPor(Long id) {
+        if (repository.findById(id) == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
         return repository.findById(id);
     }
 
     public Usuario buscaPorEmail(String email) {
+        if (repository.findByEmail(email) == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado com este e-mail.");
         return repository.findByEmail(email);
     }
 
     @Transactional
     public Usuario salva(Usuario usuario) {
         Usuario emailEmUso = repository.findByEmail(usuario.getEmail().toString());
-        if (emailEmUso != null) {
+        if (emailEmUso != null)
             throw new NegocioException("Já existe um cliente cadastrado com este e-mail.");
-        }
         return repository.save(usuario);
     }
 
     @Transactional
     public void removePelo(Long id) {
+        if (repository.findById(id) == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
         repository.deleteById(id);
     }
 
