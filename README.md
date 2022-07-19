@@ -39,6 +39,23 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
 * Maven
 * Flyway
 
+# Como rodar 
+
+```bash
+# clonar repositório
+git clone https://github.com/LucasFelip/imobiliaria
+# entrar na pasta do projeto back end
+cd imobiliaria
+# executar o projeto
+./mvnw spring-boot:run
+```
+
+# Alunos
+    Lucas Felipe dos Reis Ferreira
+        - 20191SI0017
+
+    Tadeu Costa Viegas
+        - 20191SI0022
 
 ## Para referência adicional, considere as seguintes seções:
 
@@ -48,10 +65,3 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
 * [Flyway Migration](https://docs.spring.io/spring-boot/docs/2.3.0.M1/reference/htmlsingle/#howto-execute-flyway-database-migrations-on-startup)
 * [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.3.0.M1/reference/htmlsingle/#boot-features-jpa-and-spring-data)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.3.0.M1/reference/htmlsingle/#using-boot-devtools)
-
-# Alunos
-    Lucas Felipe dos Reis Ferreira
-        - 20191SI0017
-
-    Tadeu Costa Viegas
-        - 20191SI0022
