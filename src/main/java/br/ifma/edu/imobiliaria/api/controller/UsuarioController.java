@@ -1,11 +1,15 @@
 package br.ifma.edu.imobiliaria.api.controller;
 
+import br.ifma.edu.imobiliaria.api.dto.mapper.UsuarioMapper;
+import br.ifma.edu.imobiliaria.api.dto.request.UsuarioRequest;
+import br.ifma.edu.imobiliaria.api.dto.response.UsuarioResponse;
 import br.ifma.edu.imobiliaria.domain.model.Usuario;
 import br.ifma.edu.imobiliaria.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.net.URI;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -28,11 +30,14 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
+    private final UsuarioMapper mapper;
     private final UsuarioService service;
 
     @GetMapping
-    public List<Usuario> listar() {
-        return (List<Usuario>) service.todos();
+    public List<UsuarioResponse> listar() {
+        List<Usuario> usuario = service.todos();
+        List<UsuarioResponse> usuarioResponse = mapper.toResponseList(usuario);
+        return usuarioResponse;
     }
 
     @GetMapping("{id}")
@@ -43,7 +48,7 @@ public class UsuarioController {
     @GetMapping("{email}")
     @CacheEvict(value = "listaUsuario")
     public Usuario usuarioPorEmail(@RequestParam(value = "email") String email) {
-        return service.buscaPorEmail(email);
+        return service.buscaPor(email);
     }
 
     @GetMapping("paginacao/{numPagina}/{qtdPagina}")
@@ -57,37 +62,29 @@ public class UsuarioController {
 
     @PostMapping
     @CacheEvict(value = "listaUsuario", allEntries = true)
-    public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario, UriComponentsBuilder builder) {
-        final Usuario usuarioSalvo = service.salva(usuario);
-        final URI uri = builder
-                .path("/usuario/{id}")
-                .buildAndExpand(usuarioSalvo.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuarioSalvo);
+    public ResponseEntity<UsuarioResponse> salvaUsuario(@RequestBody UsuarioRequest usuarioRequest) {
+        Usuario usuarioSalvo = mapper.toEntity(usuarioRequest);
+        usuarioSalvo = service.salva(usuarioSalvo);
+        UsuarioResponse usuarioResponse = mapper.toResponse(usuarioSalvo);
+        return new ResponseEntity<>(usuarioResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @CacheEvict(value = "listaUsuario", allEntries = true)
-    public ResponseEntity<Usuario> atualiza(@PathVariable Long id,
-            @Valid @RequestBody Usuario usuario) {
-        if (service.naoExisteCom(id)) {
-            return ResponseEntity.notFound().build();
-        } else {
-            usuario.setId(id);
-            Usuario usuarioAtualizado = service.salva(usuario);
-            return ResponseEntity.ok(usuarioAtualizado);
-        }
+    public ResponseEntity<UsuarioResponse> atualiza(@PathVariable Long id,
+            @Valid @RequestBody UsuarioRequest usuarioRequest) {
+        Usuario usuarioSalvo = mapper.toEntity(usuarioRequest);
+        usuarioSalvo = service.atualiza(usuarioSalvo, id);
+        UsuarioResponse usuarioResponse = mapper.toResponse(usuarioSalvo);
+        return new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")
     @CacheEvict(value = "listaUsuario", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id) {
-        Optional<Usuario> optional = service.buscaPor(id);
-
-        if (optional.isPresent()) {
-            service.removePelo(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        service.removePelo(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

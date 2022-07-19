@@ -1,5 +1,6 @@
 package br.ifma.edu.imobiliaria.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -18,7 +19,7 @@ import lombok.AllArgsConstructor;
 public class UsuarioService {
     private final UsuarioRepository repository;
 
-    public Iterable<Usuario> todos() {
+    public List<Usuario> todos() {
         return repository.findAll();
     }
 
@@ -26,7 +27,7 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
-    public Usuario buscaPorEmail(String email) {
+    public Usuario buscaPor(String email) {
         if (repository.findByEmail(email) == null)
             throw new NegocioException("Não existe nenhum cliente cadastrado com este e-mail.");
         return repository.findByEmail(email);
@@ -34,14 +35,22 @@ public class UsuarioService {
 
     @Transactional
     public Usuario salva(Usuario usuario) {
-        Usuario emailEmUso = repository.findByEmail(usuario.getEmail().toString());
+        Usuario emailEmUso = repository.findByEmail(usuario.getEmail());
         if (emailEmUso != null)
             throw new NegocioException("Já existe um cliente cadastrado com este e-mail.");
         return repository.save(usuario);
     }
 
+    public Usuario atualiza(Usuario usuario, Long id) {
+        if (repository.findById(id) == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
+        return salva(usuario);
+    }
+
     @Transactional
     public void removePelo(Long id) {
+        if (repository.findById(id) == null)
+            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
         repository.deleteById(id);
     }
 

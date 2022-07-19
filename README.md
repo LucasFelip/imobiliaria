@@ -16,19 +16,19 @@ Back-end desenvolvido para o sistema de imobiliária, destinado ao projeto de Li
 
 ### Abertura
 
-![HTTP 1](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-abertura.jpg)
+![HTTP 1](https://github.com/LucasFelip/imobiliaria/blob/master/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-abertura.jpg)
 
 ### Usuarios
 
-![HTTP 2](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-usuario.jpg)
+![HTTP 2](https://github.com/LucasFelip/imobiliaria/blob/master/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-usuario.jpg)
 
 ### Imobiliaria
 
-![HTTP 3](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-imobiliaria.jpg)
+![HTTP 3](https://github.com/LucasFelip/imobiliaria/blob/master/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-imobiliaria.jpg)
 
 ### Imoveis
 
-![HTTP 4](https://github.com/LucasFelip/imobiliaria/blob/impl_lucas/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-imovel.jpg)
+![HTTP 4](https://github.com/LucasFelip/imobiliaria/blob/master/src/main/java/br/ifma/edu/imobiliaria/assets/imobiliaria-api-imovel.jpg)
 
 # Tecnologias
 
