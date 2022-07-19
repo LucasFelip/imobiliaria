@@ -4,6 +4,7 @@ import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.service.ImovelService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -72,6 +73,7 @@ public class ImovelController {
     }
 
     @PostMapping
+    @CacheEvict(value = "listaImovel", allEntries = true)
     public ResponseEntity<Imovel> salvaImovel(@RequestBody Imovel imovel, UriComponentsBuilder builder) {
         final Imovel imovelSalvo = service.salva(imovel);
         final URI uri = builder
@@ -81,6 +83,7 @@ public class ImovelController {
     }
 
     @PutMapping("{id}")
+    @CacheEvict(value = "listaImovel", allEntries = true)
     public ResponseEntity<Imovel> atualiza(@PathVariable Long id,
             @Valid @RequestBody Imovel imovel) {
         if (service.naoExisteCom(id)) {
@@ -93,6 +96,7 @@ public class ImovelController {
     }
 
     @DeleteMapping("{id}")
+    @CacheEvict(value = "listaImovel", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Imovel> optional = service.buscaPor(id);
 

@@ -3,6 +3,7 @@ package br.ifma.edu.imobiliaria.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class ImobiliariaController {
     }
 
     @PutMapping("{id}")
+    @CacheEvict(value = "listaImovel", allEntries = true)
     public ResponseEntity<Imobiliaria> atualizaImobiliaria(@RequestBody Imobiliaria imobiliaria,
             @PathVariable(value = "id") long id) {
         if (service.naoExisteCom(id)) {
@@ -45,6 +47,7 @@ public class ImobiliariaController {
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "listaImovel", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Imobiliaria> optional = service.buscaPor(id);
 

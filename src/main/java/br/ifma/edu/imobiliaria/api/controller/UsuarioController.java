@@ -4,6 +4,7 @@ import br.ifma.edu.imobiliaria.domain.model.Usuario;
 import br.ifma.edu.imobiliaria.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,6 +41,7 @@ public class UsuarioController {
     }
 
     @GetMapping("{email}")
+    @CacheEvict(value = "listaUsuario")
     public Usuario usuarioPorEmail(@RequestParam(value = "email") String email) {
         return service.buscaPorEmail(email);
     }
@@ -54,6 +56,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @CacheEvict(value = "listaUsuario", allEntries = true)
     public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario, UriComponentsBuilder builder) {
         final Usuario usuarioSalvo = service.salva(usuario);
         final URI uri = builder
@@ -63,6 +66,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
+    @CacheEvict(value = "listaUsuario", allEntries = true)
     public ResponseEntity<Usuario> atualiza(@PathVariable Long id,
             @Valid @RequestBody Usuario usuario) {
         if (service.naoExisteCom(id)) {
@@ -75,6 +79,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "listaUsuario", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Usuario> optional = service.buscaPor(id);
 
