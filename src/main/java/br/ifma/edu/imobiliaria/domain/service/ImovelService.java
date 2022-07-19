@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ifma.edu.imobiliaria.domain.exception.NegocioException;
@@ -18,14 +20,10 @@ public class ImovelService {
     private final ImovelRepository repository;
 
     public Iterable<Imovel> todos() {
-        if (repository.findAll() == null)
-            throw new NegocioException("Não existe nenhum imovel cadastrado.");
         return repository.findAll();
     }
 
     public Optional<Imovel> buscaPor(Long id) {
-        if (repository.findById(id) == null)
-            throw new NegocioException("Não existe nenhum imovel cadastrado com este id.");
         return repository.findById(id);
     }
 
@@ -48,12 +46,18 @@ public class ImovelService {
 
     @Transactional
     public void removePelo(Long id) {
-        if (repository.findById(id) == null)
-            throw new NegocioException("Não existe nenhum imovel cadastrado com este id.");
         repository.deleteById(id);
     }
 
     public boolean naoExisteCom(Long id) {
         return !repository.existsById(id);
+    }
+
+    public Page<Imovel> buscaPaginada(Pageable page) {
+        return repository.findAll(page);
+    }
+
+    public Page<Imovel> buscaPor(String nome, Pageable pageable) {
+        return repository.findByCidadeLikeIgnoreCase(nome, pageable);
     }
 }

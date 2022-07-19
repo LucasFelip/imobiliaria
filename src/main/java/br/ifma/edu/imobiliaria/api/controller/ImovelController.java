@@ -4,6 +4,10 @@ import br.ifma.edu.imobiliaria.domain.model.Imovel;
 import br.ifma.edu.imobiliaria.domain.service.ImovelService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +50,25 @@ public class ImovelController {
     @GetMapping(path = "/cidade/{cidade}")
     public List<Imovel> listaPorCidade(@RequestParam(name = "cidade") String cidade) {
         return service.buscaPor("%" + cidade + "%");
+    }
+
+    @GetMapping("paginacao/{numPagina}/{qtdPagina}")
+    public Iterable<Imovel> buscaPaginada(@PathVariable int numPagina,
+            @PathVariable int qtdPagina) {
+        if (qtdPagina > 10)
+            qtdPagina = 10;
+        PageRequest page = PageRequest.of(numPagina, qtdPagina);
+        return service.buscaPaginada(page);
+
+    }
+
+    @GetMapping("/paginacao")
+    public Iterable<Imovel> lista(@RequestParam(required = false) String nome,
+            @PageableDefault(sort = "nome", direction = Sort.Direction.ASC, page = 0, size = 5) Pageable paginacao) {
+        if (nome == null)
+            return service.buscaPaginada(paginacao);
+        else
+            return service.buscaPor(nome, paginacao);
     }
 
     @PostMapping

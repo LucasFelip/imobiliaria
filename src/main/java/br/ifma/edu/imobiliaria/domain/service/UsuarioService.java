@@ -19,14 +19,10 @@ public class UsuarioService {
     private final UsuarioRepository repository;
 
     public Iterable<Usuario> todos() {
-        if (repository.findAll() == null)
-            throw new NegocioException("Não existe nenhum cliente cadastrado.");
         return repository.findAll();
     }
 
     public Optional<Usuario> buscaPor(Long id) {
-        if (repository.findById(id) == null)
-            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
         return repository.findById(id);
     }
 
@@ -46,8 +42,6 @@ public class UsuarioService {
 
     @Transactional
     public void removePelo(Long id) {
-        if (repository.findById(id) == null)
-            throw new NegocioException("Não existe nenhum cliente cadastrado com este id.");
         repository.deleteById(id);
     }
 

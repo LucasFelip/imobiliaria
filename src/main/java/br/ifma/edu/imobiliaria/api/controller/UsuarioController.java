@@ -1,6 +1,5 @@
 package br.ifma.edu.imobiliaria.api.controller;
 
-import br.ifma.edu.imobiliaria.api.dto.mapper.UsuarioMapper;
 import br.ifma.edu.imobiliaria.domain.model.Usuario;
 import br.ifma.edu.imobiliaria.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
-    private final UsuarioMapper mapper;
     private final UsuarioService service;
 
     @GetMapping
@@ -37,7 +35,7 @@ public class UsuarioController {
     }
 
     @GetMapping("{id}")
-    public Optional<Usuario> listaUsuarioPorId(@PathVariable(value = "id") long id) {
+    public Optional<Usuario> listaUsuarioPorId(@RequestParam(value = "id") long id) {
         return service.buscaPor(id);
     }
 
