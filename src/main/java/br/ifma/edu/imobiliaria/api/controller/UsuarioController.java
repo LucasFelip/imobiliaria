@@ -1,10 +1,13 @@
 package br.ifma.edu.imobiliaria.api.controller;
 
+import br.ifma.edu.imobiliaria.api.dto.mapper.UsuarioMapper;
+import br.ifma.edu.imobiliaria.api.dto.response.UsuarioResponse;
 import br.ifma.edu.imobiliaria.domain.model.Usuario;
 import br.ifma.edu.imobiliaria.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
+    private final UsuarioMapper mapper;
     private final UsuarioService service;
 
     @GetMapping
@@ -37,13 +41,6 @@ public class UsuarioController {
     public Optional<Usuario> listaUsuarioPorId(@PathVariable(value = "id") long id) {
         return service.buscaPor(id);
     }
-
-    /*
-     * @GetMapping("{email}")
-     * public Usuario buscarUserPorEmail(String email) {
-     * return service.buscaPor(email);
-     * }
-     */
 
     @GetMapping("paginacao/{numPagina}/{qtdPagina}")
     public Iterable<Usuario> buscaPaginada(@PathVariable int numPagina,
